@@ -3,20 +3,74 @@
 <head>
     <title>Customized T-shirt Order Form</title>
     <style>
-        body{font-family:Arial, sans-serif;background-color:#f2f2f2;margin:0;padding:0}
-        h1{background-color:#333;color:#fff;padding:20px 0;text-align:center}
-        form{max-width:500px;margin:0 auto;background-color:#fff;padding:20px;box-shadow:0 0 10px rgba(0,0,0,.2)}
-        label{font-weight:bold}
-        input[type="text"],input[type="number"],input[type="date"],input[type="tel"],select,textarea{width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:4px}
-        input[type="radio"]{margin-right:5px}
-        input[type="button"]{background-color:#333;color:#fff;border:none;padding:10px 20px;cursor:pointer}
-        input[type="button"]:hover{background-color:#555}
-        #receiptContainer{margin-top:20px;padding:20px;background-color:#fff;box-shadow:0 0 10px rgba(0,0,0,.2)}
+        /* CSS Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        input[type="button"] {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover {
+            background-color: #555;
+        }
+
+        #receiptContainer {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
     <h1>Customized T-shirt Order Form</h1>
     <form>
+        <!-- User Information Section -->
         <label for="name">Name:</label><br>
         <input type="text" id="name" required><br>
 
@@ -29,6 +83,7 @@
         <input type="radio" id="female" name="gender" value="Female" required>
         <label for="female">Female</label><br>
 
+        <!-- T-shirt Order Section -->
         <label for="tagline">Tagline on the Shirt:</label><br>
         <input type="text" id="tagline" required><br>
 
@@ -56,6 +111,7 @@
         <label for="contact_number">Contact Number:</label><br>
         <input type="tel" id="contact_number" required><br>
 
+        <!-- Submit Button -->
         <input type="button" value="Place Order" onclick="generateReceipt();">
     </form>
 
@@ -63,6 +119,7 @@
     <div id="receiptContainer"></div>
 
     <script>
+        // JavaScript Functions
         function validateForm() {
             const tagline = document.getElementById("tagline").value;
             const contactNumber = document.getElementById("contact_number").value;
@@ -78,8 +135,20 @@
                 const date = new Date();
                 const receiptDate = date.toLocaleDateString();
                 const getUserInput = (id) => document.getElementById(id).value;
-                const user = { name: getUserInput("name"), age: getUserInput("age"), gender: document.querySelector('input[name="gender"]:checked').value };
-                const order = { tagline: getUserInput("tagline"), color: getUserInput("color"), size: getUserInput("size"), quantity: getUserInput("quantity"), deliveryDate: getUserInput("delivery_date"), deliveryAddress: getUserInput("delivery_address"), contactNumber: getUserInput("contact_number") };
+                const user = {
+                    name: getUserInput("name"),
+                    age: getUserInput("age"),
+                    gender: document.querySelector('input[name="gender"]:checked').value
+                };
+                const order = {
+                    tagline: getUserInput("tagline"),
+                    color: getUserInput("color"),
+                    size: getUserInput("size"),
+                    quantity: getUserInput("quantity"),
+                    deliveryDate: getUserInput("delivery_date"),
+                    deliveryAddress: getUserInput("delivery_address"),
+                    contactNumber: getUserInput("contact_number")
+                };
                 if (parseInt(order.quantity) > 50) {
                     alert("Order quantity cannot exceed 50.");
                     return;
