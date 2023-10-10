@@ -1,140 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Customized T-shirt Order Form</title>
-<script>
- function validateForm() {
-   // Validate the tagline - restrict it to 50 characters max
-   var tagline = document.getElementById("tagline").value;
-   if (tagline.length > 50) {
-     alert("Tagline must not exceed 50 characters.");
-     return false;
-   }
-
-
-   // Validate contact number - check for 9 digits
-   var contactNumber = document.getElementById("contact_number").value;
-   if (!/^\d{9}$/.test(contactNumber)) {
-     alert("Contact number must be a 9-digit number.");
-     return false;
-   }
-
-
-   return true;
- }
-
-
- function generateReceipt() {
-   if (validateForm()) {
-     var date = new Date();
-     var receiptDate = date.toLocaleDateString();
-     var tagline = document.getElementById("tagline").value;
-     var color = document.getElementById("color").value;
-     var size = document.getElementById("size").value;
-     var quantity = document.getElementById("quantity").value;
-     var deliveryDate = document.getElementById("delivery_date").value;
-     var deliveryAddress = document.getElementById("delivery_address").value;
-     var contactNumber = document.getElementById("contact_number").value;
-
-
-     // User details
-     var name = document.getElementById("name").value;
-     var age = document.getElementById("age").value;
-     var gender = document.querySelector('input[name="gender"]:checked').value;
-
-
-     // Check if quantity exceeds 50
-     if (parseInt(quantity) > 50) {
-       alert("Order quantity cannot exceed 50.");
-       return;
-     }
-
-
-     // Create and display the receipt within the HTML page
-     var receipt = `<h2>Receipt</h2>`;
-     receipt += `<p>Receipt Date: ${receiptDate}</p>`;
-     receipt += `<p>User Details:</p>`;
-     receipt += `<p>Name: ${name}</p>`;
-     receipt += `<p>Age: ${age}</p>`;
-     receipt += `<p>Gender: ${gender}</p>`;
-     receipt += `<p>Order Details:</p>`;
-     receipt += `<p>Tagline: ${tagline}</p>`;
-     receipt += `<p>Color: ${color}</p>`;
-     receipt += `<p>Size: ${size}</p>`;
-     receipt += `<p>Quantity: ${quantity}</p>`;
-     receipt += `<p>Delivery Date: ${deliveryDate}</p>`;
-     receipt += `<p>Delivery Address: ${deliveryAddress}</p>`;
-     receipt += `<p>Contact Number: ${contactNumber}</p>`;
-
-
-     document.getElementById("receiptContainer").innerHTML = receipt;
-   }
- }
-</script>
+    <title>Customized T-shirt Order Form</title>
+    <style>
+        body{font-family:Arial, sans-serif;background-color:#f2f2f2;margin:0;padding:0}
+        h1{background-color:#333;color:#fff;padding:20px 0;text-align:center}
+        form{max-width:500px;margin:0 auto;background-color:#fff;padding:20px;box-shadow:0 0 10px rgba(0,0,0,.2)}
+        label{font-weight:bold}
+        input[type="text"],input[type="number"],input[type="date"],input[type="tel"],select,textarea{width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc;border-radius:4px}
+        input[type="radio"]{margin-right:5px}
+        input[type="button"]{background-color:#333;color:#fff;border:none;padding:10px 20px;cursor:pointer}
+        input[type="button"]:hover{background-color:#555}
+        #receiptContainer{margin-top:20px;padding:20px;background-color:#fff;box-shadow:0 0 10px rgba(0,0,0,.2)}
+    </style>
 </head>
 <body>
-<h1>Customized T-shirt Order Form</h1>
-<form action="" method="post">
- <label for="name">Name:</label><br>
- <input type="text" id="name" name="name" required><br>
+    <h1>Customized T-shirt Order Form</h1>
+    <form>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" required><br>
 
+        <label for="age">Age:</label><br>
+        <input type="number" id="age" min="1" required><br>
 
- <label for="age">Age:</label><br>
- <input type="number" id="age" name="age" min="1" required><br>
+        <label>Gender:</label><br>
+        <input type="radio" id="male" name="gender" value="Male" required>
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="Female" required>
+        <label for="female">Female</label><br>
 
+        <label for="tagline">Tagline on the Shirt:</label><br>
+        <input type="text" id="tagline" required><br>
 
- <label>Gender:</label><br>
- <input type="radio" id="male" name="gender" value="Male" required>
- <label for="male">Male</label>
- <input type="radio" id="female" name="gender" value="Female" required>
- <label for="female">Female</label>
- <br>
+        <label for="color">Color:</label><br>
+        <input type="text" id="color" required><br>
 
+        <label for="size">Size:</label><br>
+        <select id="size" required>
+            <option value="" disabled selected>Select Size</option>
+            <option value="S">Small</option>
+            <option value="M">Medium</option>
+            <option value="L">Large</option>
+            <option value="XL">Extra Large</option>
+        </select><br>
 
- <label for="tagline">Tagline on the Shirt:</label><br>
- <input type="text" id="tagline" name="tagline" required><br>
+        <label for="quantity">Quantity:</label><br>
+        <input type="number" id="quantity" min="1" required><br>
 
+        <label for="delivery_date">Date of Delivery:</label><br>
+        <input type="date" id="delivery_date" required><br>
 
- <label for="color">Color:</label><br>
- <input type="text" id="color" name="color" required><br>
+        <label for="delivery_address">Delivery Address:</label><br>
+        <textarea id="delivery_address" rows="4" cols="50" required></textarea><br>
 
+        <label for="contact_number">Contact Number:</label><br>
+        <input type="tel" id="contact_number" required><br>
 
- <label for="size">Size:</label><br>
- <select id="size" name="size" required>
-   <option value="" disabled selected>Select Size</option>
-   <option value="S">Small</option>
-   <option value="M">Medium</option>
-   <option value="L">Large</option>
-   <option value="XL">Extra Large</option>
- </select><br>
+        <input type="button" value="Place Order" onclick="generateReceipt();">
+    </form>
 
+    <!-- Container for displaying the receipt -->
+    <div id="receiptContainer"></div>
 
- <label for="quantity">Quantity:</label><br>
- <input type="number" id="quantity" name="quantity" min="1" required><br>
+    <script>
+        function validateForm() {
+            const tagline = document.getElementById("tagline").value;
+            const contactNumber = document.getElementById("contact_number").value;
+            if (tagline.length > 50 || !/^\d{9}$/.test(contactNumber)) {
+                alert("Invalid input. Please check tagline and contact number.");
+                return false;
+            }
+            return true;
+        }
 
-
- <label for="delivery_date">Date of Delivery:</label><br>
- <input type="date" id="delivery_date" name="delivery_date" required><br>
-
-
- <label for="delivery_address">Delivery Address:</label><br>
- <textarea id="delivery_address" name="delivery_address" rows="4" cols="50" required></textarea><br>
-
-
- <label for="contact_number">Contact Number:</label><br>
- <input type="tel" id="contact_number" name="contact_number" required><br>
-
-
- <input type="button" value="Place Order" onclick="generateReceipt();">
-</form>
-
-
-<!-- Container for displaying the receipt -->
-<div id="receiptContainer"></div>
-
-
+        function generateReceipt() {
+            if (validateForm()) {
+                const date = new Date();
+                const receiptDate = date.toLocaleDateString();
+                const getUserInput = (id) => document.getElementById(id).value;
+                const user = { name: getUserInput("name"), age: getUserInput("age"), gender: document.querySelector('input[name="gender"]:checked').value };
+                const order = { tagline: getUserInput("tagline"), color: getUserInput("color"), size: getUserInput("size"), quantity: getUserInput("quantity"), deliveryDate: getUserInput("delivery_date"), deliveryAddress: getUserInput("delivery_address"), contactNumber: getUserInput("contact_number") };
+                if (parseInt(order.quantity) > 50) {
+                    alert("Order quantity cannot exceed 50.");
+                    return;
+                }
+                const receipt = `<h2>Receipt</h2><p>Receipt Date: ${receiptDate}</p><p>User Details:</p><p>Name: ${user.name}</p><p>Age: ${user.age}</p><p>Gender: ${user.gender}</p><p>Order Details:</p><p>Tagline: ${order.tagline}</p><p>Color: ${order.color}</p><p>Size: ${order.size}</p><p>Quantity: ${order.quantity}</p><p>Delivery Date: ${order.deliveryDate}</p><p>Delivery Address: ${order.deliveryAddress}</p><p>Contact Number: ${order.contactNumber}</p>`;
+                document.getElementById("receiptContainer").innerHTML = receipt;
+            }
+        }
+    </script>
 </body>
 </html>
-
-
-
